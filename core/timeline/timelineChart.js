@@ -123,6 +123,9 @@ class TimelineChart extends Component {
                         <TimelineControlsContainer
                             domain={zoomableDomain}
                             zoomDomain={zoomedDomain}
+                            // NOTE: hide the built in cursor. We need to implement our own since the built-in
+                            //       cursor disappears when its no longer being touched. Also seemed to be a
+                            //       little buggy when dragging outside of the chart area
                             cursorComponent={<LineSegment style={{stroke: "transparent", strokeWidth: 0}}/>}
                             onZoomDomainChange={this._onDomainChange.bind(this)}
                             onCursorChange={this._onCursorChange.bind(this)}
@@ -194,7 +197,7 @@ class TimelineChart extends Component {
             // start time must be before end of x-domain, and end time must be after start of x-domain
             // index must be within y view domain
             (d) => (
-                //d.delay <= xDomainCurrent[1] && (d.delay + d.duration) >= xDomainCurrent[0] &&
+                d.delay <= xDomainCurrent[1] && (d.delay + d.duration) >= xDomainCurrent[0] &&
                 d.index < yDomainPaged[0] && d.index >= yDomainPaged[1]
             )
         )
