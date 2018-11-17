@@ -277,7 +277,7 @@ export default class TimelineControlsContainer extends VictoryCombinedContainer 
                 onTouchEnd: (evt, targetProps, eventKey, ctx) => {
                     let mutators = [setGestureStateReady];
 
-                    if (evt.nativeEvent.touches.length < 2 && !targetProps.multiTouched) {
+                    if (evt.nativeEvent.touches && evt.nativeEvent.touches.length < 2 && !targetProps.multiTouched) {
                         if (evt.nativeEvent.touches.length == 0) {
                             // Another hack for iOS 12. For some reason, when tapping, the native event records the touch
                             // values in the changed touches, but not the touches array.
