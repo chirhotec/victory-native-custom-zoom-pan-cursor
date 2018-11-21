@@ -128,7 +128,6 @@ export default class App extends Component {
   }
 
   _enableScroll(enabled) {
-    console.log("_enableScroll", enabled);
     this.setState({
       allowScroll: enabled
     });
