@@ -1,12 +1,15 @@
 import { defaults } from "lodash";
 import React from "react";
 import { CursorHelpers } from "victory-cursor-container";
-import { createContainer, VictoryClipContainer, VictoryZoomContainer } from "victory-native";
+import { createContainer, VictoryClipContainer } from "victory-native";
 import NativeZoomHelpers from "./zoomHelpers";
+import VictoryContainer from './victory-container.js';
 
 //region Constants for Custom Gesture Handling
 
-const VictoryCombinedContainer = createContainer("zoom", "cursor");
+// const VictoryCombinedContainer = createContainer("zoom", "cursor");
+// NOTE: testing erroneous event calls on iOS
+const VictoryCombinedContainer = VictoryContainer
 
 // Gesture States, used to ensure that only one type of gesture can be performed
 // for a given user interation. The user must lift all fingers before doing a
@@ -146,38 +149,22 @@ printEvents = props => {
       eventHandlers: {
         // On Touch Start Event Handler
         onTouchStart: (evt, targetProps, eventKey, ctx) => {
-          console.log(
-            "onTouchStart    ",
-            "touches: " + getTouchCount(evt.nativeEvent.touches),
-            "  changedTouches: " + getTouchCount(evt.nativeEvent.changedTouches)
-          );
+          console.log("onTouchStart    ", evt.currentTarget);
         },
 
         // On Touch Move Event Handler
         onTouchMove: (evt, targetProps, eventKey, ctx) => {
-          console.log(
-            "onTouchMove     ",
-            "touches: " + getTouchCount(evt.nativeEvent.touches),
-            "  changedTouches: " + getTouchCount(evt.nativeEvent.changedTouches)
-          );
+          console.log("onTouchMove     ", evt.currentTarget);
         },
 
         // On Touch Pinch Event Handler
         onTouchPinch: (evt, targetProps, eventKey, ctx) => {
-          console.log(
-            "onTouchPinch    ",
-            "touches: " + getTouchCount(evt.nativeEvent.touches),
-            "  changedTouches: " + getTouchCount(evt.nativeEvent.changedTouches)
-          );
+          console.log("onTouchPinch    ", evt.currentTarget);
         },
 
         // On Touch End Event Handler
         onTouchEnd: (evt, targetProps, eventKey, ctx) => {
-          console.log(
-            "onTouchEnd      ",
-            "touches: " + getTouchCount(evt.nativeEvent.touches),
-            "  changedTouches: " + getTouchCount(evt.nativeEvent.changedTouches)
-          );
+          console.log("onTouchEnd      ", evt.currentTarget);
         }
       }
     }
@@ -376,9 +363,10 @@ realEvents = props => {
   ];
 };
 
-export default class TimelineControlsContainer extends VictoryCombinedContainer {
+// NOTE: using VictoryContainer copied to this repository
+export default class TimelineControlsContainer extends VictoryContainer {
   static defaultProps = {
-    ...VictoryCombinedContainer.defaultProps,
+    ...VictoryContainer.defaultProps,
     clipContainerComponent: <VictoryClipContainer />,
     zoomDirection: "x",
     panDirection: "x",
